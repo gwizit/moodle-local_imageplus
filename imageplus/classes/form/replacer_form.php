@@ -252,7 +252,18 @@ class replacer_form extends \moodleform {
                 get_string('allowimageconversion', 'local_imageplus'));
             $mform->addHelpButton('allowimageconversion', 'allowimageconversion', 'local_imageplus');
             $mform->setDefault('allowimageconversion', isset($form_data->allowimageconversion) ? $form_data->allowimageconversion : 1);
+
+            $mform->addElement('advcheckbox', 'keeporiginaldimensions',
+                get_string('keeporiginaldimensions', 'local_imageplus'));
+            $mform->addHelpButton('keeporiginaldimensions', 'keeporiginaldimensions', 'local_imageplus');
+            $mform->setDefault('keeporiginaldimensions', isset($form_data->keeporiginaldimensions) ? $form_data->keeporiginaldimensions : 1);
         }
+
+        // Auto purge cache checkbox.
+        $mform->addElement('advcheckbox', 'autopurgecache',
+            get_string('autopurgecache', 'local_imageplus'));
+        $mform->addHelpButton('autopurgecache', 'autopurgecache', 'local_imageplus');
+        $mform->setDefault('autopurgecache', isset($form_data->autopurgecache) ? $form_data->autopurgecache : 1);
 
         // Backup confirmation checkbox.
         $mform->addElement('advcheckbox', 'backupconfirm',

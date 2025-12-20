@@ -41,11 +41,13 @@ class local_imageplus_renderer extends plugin_renderer_base {
      * @param array $filesystem_files File system files
      * @param array $database_files Database files
      * @param bool $scan_only Whether this is scan only
+     * @param bool $cache_purged Whether caches were purged
+     * @param bool $auto_purge_enabled Whether auto purge was enabled
      * @return string HTML output
      */
-    public function render_results($replacer, $filesystem_files, $database_files, $scan_only) {
+    public function render_results($replacer, $filesystem_files, $database_files, $scan_only, $cache_purged = false, $auto_purge_enabled = true) {
         // Use the new output renderable and template.
-        $results = new \local_imageplus\output\results($replacer, $filesystem_files, $database_files, $scan_only);
+        $results = new \local_imageplus\output\results($replacer, $filesystem_files, $database_files, $scan_only, $cache_purged, $auto_purge_enabled);
         return $this->render_from_template('local_imageplus/results', $results->export_for_template($this));
     }
 

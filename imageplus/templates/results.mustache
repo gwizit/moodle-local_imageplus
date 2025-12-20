@@ -71,6 +71,18 @@
     </div>
     {{/scan_only}}
 
+    {{#browser_cache_warning}}
+    <div class="alert alert-danger">
+        <strong>{{#str}}warning{{/str}}:</strong> {{browser_cache_warning}}
+    </div>
+    {{/browser_cache_warning}}
+
+    {{#cache_purge_warning}}
+    <div class="alert alert-warning">
+        <strong>{{#str}}warning{{/str}}:</strong> {{{cache_purge_warning}}}
+    </div>
+    {{/cache_purge_warning}}
+
     {{#has_stats}}
     <div class="local-imageplus-stats-container">
         {{#stats}}
@@ -93,7 +105,7 @@
     <div class="local-imageplus-file-list">
         {{#filesystem_files}}
         <div class="local-imageplus-file-item">
-            <a href="{{url}}" class="local-imageplus-file-link" target="_blank" title="{{view_file_label}}">{{basename}}</a>
+            <a href="{{url}}" class="local-imageplus-file-link" target="_blank" rel="noopener noreferrer" title="{{view_file_label}}">{{basename}}</a>
             <div class="local-imageplus-file-details">{{filepath}} - {{message}}</div>
         </div>
         {{/filesystem_files}}
@@ -106,7 +118,7 @@
         {{#database_files}}
         <div class="local-imageplus-file-item">
             {{#url}}
-            <a href="{{url}}" class="local-imageplus-file-link" target="_blank" title="{{view_file_label}}">{{filename}}</a>
+            <a href="{{url}}" class="local-imageplus-file-link" target="_blank" rel="noopener noreferrer" title="{{view_file_label}}">{{filename}}</a>
             {{/url}}
             {{^url}}
             <span class="local-imageplus-file-link">{{filename}}</span>

@@ -50,6 +50,12 @@ class results implements renderable, templatable {
     /** @var bool Whether this is scan only */
     protected $scan_only;
 
+    /** @var bool Whether caches were purged */
+    protected $cache_purged;
+
+    /** @var bool Whether auto purge was enabled */
+    protected $auto_purge_enabled;
+
     /**
      * Constructor.
      *
@@ -57,12 +63,16 @@ class results implements renderable, templatable {
      * @param array $filesystem_files File system files
      * @param array $database_files Database files
      * @param bool $scan_only Whether this is scan only
+     * @param bool $cache_purged Whether caches were purged
+     * @param bool $auto_purge_enabled Whether auto purge was enabled
      */
-    public function __construct($replacer, $filesystem_files, $database_files, $scan_only) {
+    public function __construct($replacer, $filesystem_files, $database_files, $scan_only, $cache_purged = false, $auto_purge_enabled = true) {
         $this->replacer = $replacer;
         $this->filesystem_files = $filesystem_files;
         $this->database_files = $database_files;
         $this->scan_only = $scan_only;
+        $this->cache_purged = $cache_purged;
+        $this->auto_purge_enabled = $auto_purge_enabled;
     }
 
     /**
@@ -94,6 +104,17 @@ class results implements renderable, templatable {
         $successful_db = array_filter($replacement_log, function($entry) {
             return $entry['success'] && $entry['type'] === 'database';
         });
+
+        // Browser cache warning for filesystem replacements.
+        if (!$this->scan_only && !empty($successful_fs)) {
+            $data->browser_cache_warning = get_string('browser_cache_warning', 'local_imageplus');
+        }
+
+        // Moodle cache purge warning.
+        $cachepurgeurl = new \moodle_url('/admin/purgecaches.php', ['confirm' => 1, 'sesskey' => sesskey()]);
+        if (!$this->scan_only && !$this->cache_purged && (!empty($successful_fs) || !empty($successful_db))) {
+            $data->cache_purge_warning = get_string('cache_purge_warning', 'local_imageplus', $cachepurgeurl->out());
+        }
 
         // Statistics.
         $data->stats = [];
@@ -211,9 +232,11 @@ class results implements renderable, templatable {
         if (!$this->scan_only) {
             $completemsg = get_string('operationcomplete', 'local_imageplus') . ' ';
             if ($stats['files_replaced'] > 0 || $stats['db_files_replaced'] > 0) {
-                $completemsg .= get_string('operationcomplete_execute', 'local_imageplus');
-                $cachepurgeurl = new \moodle_url('/admin/purgecaches.php', ['confirm' => 1, 'sesskey' => sesskey()]);
-                $completemsg .= ' ' . get_string('operationcomplete_clearcache', 'local_imageplus', $cachepurgeurl->out());
+                if ($this->cache_purged) {
+                    $completemsg .= get_string('operationcomplete_purged', 'local_imageplus');
+                } else {
+                    $completemsg .= get_string('operationcomplete_execute', 'local_imageplus');
+                }
                 $data->completion_class = 'alert-success';
             } else {
                 $data->completion_class = 'alert-info';
@@ -224,8 +247,11 @@ class results implements renderable, templatable {
         // Donation message.
         $data->donation_message = get_string('donation_message', 'local_imageplus');
 
-        // Start over button.
-        $data->startover_url = new \moodle_url('/local/imageplus/index.php');
+        // Start over button (CSRF-protected with sesskey).
+        $data->startover_url = (new \moodle_url('/local/imageplus/index.php', [
+            'startover' => 1,
+            'sesskey' => sesskey(),
+        ]))->out(false);
         $data->startover_label = get_string('startover', 'local_imageplus');
 
         return $data;

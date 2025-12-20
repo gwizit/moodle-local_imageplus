@@ -137,6 +137,7 @@ class replacer {
             'search_filesystem' => true,
             'file_type' => 'image', // New: file type filter
             'allow_image_conversion' => true, // New: allow cross-format image replacement
+            'keep_original_dimensions' => true, // New: resize to match target dimensions
         ], $config);
 
         // Disable image conversion if GD library is not available
@@ -587,6 +588,12 @@ class replacer {
                 $target_height = $target_info[1];
                 $target_type = $target_info[2];
 
+                // If keep_original_dimensions is false, use source image dimensions
+                if (!$this->config['keep_original_dimensions']) {
+                    $target_width = $this->source_image['width'];
+                    $target_height = $this->source_image['height'];
+                }
+
                 $this->add_output("Target format: " . $this->get_format_name($target_type) .
                     ", Target size: {$target_width}x{$target_height}", 'info');
 
@@ -595,7 +602,8 @@ class replacer {
                     return true;
                 }
 
-                $original_perms = fileperms($target_path);
+                $original_perms = @fileperms($target_path);
+                $original_mode = ($original_perms !== false) ? ($original_perms & 0777) : false;
 
                 $resized_image = $this->resize_image(
                     $this->source_image_resource,
@@ -612,8 +620,8 @@ class replacer {
                 }
 
                 if ($success) {
-                    if ($this->config['preserve_permissions'] && $original_perms !== false) {
-                        chmod($target_path, $original_perms);
+                    if ($this->config['preserve_permissions'] && $original_mode !== false) {
+                        @chmod($target_path, $original_mode);
                     }
                     $this->add_output("Successfully replaced image", 'success');
                     $this->add_to_replacement_log($target_path, 'filesystem', true, 'Image replaced successfully');
@@ -630,7 +638,8 @@ class replacer {
                     return true;
                 }
 
-                $original_perms = fileperms($target_path);
+                $original_perms = @fileperms($target_path);
+                $original_mode = ($original_perms !== false) ? ($original_perms & 0777) : false;
                 
                 if (!copy($this->source_image['filepath'], $target_path)) {
                     $this->add_output("Failed to copy file", 'error');
@@ -638,8 +647,8 @@ class replacer {
                     return false;
                 }
 
-                if ($this->config['preserve_permissions'] && $original_perms !== false) {
-                    chmod($target_path, $original_perms);
+                if ($this->config['preserve_permissions'] && $original_mode !== false) {
+                    @chmod($target_path, $original_mode);
                 }
 
                 $this->add_output("Successfully replaced file", 'success');
@@ -664,6 +673,13 @@ class replacer {
         global $CFG, $DB;
 
         try {
+            if (empty($file_record->contenthash) || !preg_match('/^[0-9a-f]{40}$/', $file_record->contenthash)) {
+                $this->add_output('Invalid contenthash for file record (ID: ' . (int)$file_record->id . ')', 'error');
+                $this->add_to_replacement_log($file_record->filename, 'database', false,
+                    'Invalid contenthash (ID: ' . (int)$file_record->id . ')', $file_record);
+                return false;
+            }
+
             $filepath = $this->get_file_path_from_hash($file_record->contenthash);
 
             if (!file_exists($filepath)) {
@@ -695,6 +711,12 @@ class replacer {
                 $target_width = $original_info[0];
                 $target_height = $original_info[1];
                 $target_type = $original_info[2];
+
+                // If keep_original_dimensions is false, use source image dimensions
+                if (!$this->config['keep_original_dimensions']) {
+                    $target_width = $this->source_image['width'];
+                    $target_height = $this->source_image['height'];
+                }
 
                 $this->add_output("Target format: " . $this->get_format_name($target_type) .
                     ", Target size: {$target_width}x{$target_height}", 'info');
@@ -731,13 +753,20 @@ class replacer {
                 $new_file_dir = dirname($new_file_path);
 
                 if (!is_dir($new_file_dir)) {
-                    mkdir($new_file_dir, 0755, true);
+                    if (!@mkdir($new_file_dir, 0755, true) && !is_dir($new_file_dir)) {
+                        $this->add_output("Failed to create file storage directory: $new_file_dir", 'error');
+                        @unlink($temp_file);
+                        return false;
+                    }
                 }
 
-                if (!copy($temp_file, $new_file_path)) {
-                    $this->add_output("Failed to copy new file to storage", 'error');
-                    @unlink($temp_file);
-                    return false;
+                // Avoid overwriting an existing hash path (filepool content is immutable).
+                if (!file_exists($new_file_path)) {
+                    if (!copy($temp_file, $new_file_path)) {
+                        $this->add_output("Failed to copy new file to storage", 'error');
+                        @unlink($temp_file);
+                        return false;
+                    }
                 }
 
                 @unlink($temp_file);
@@ -764,14 +793,22 @@ class replacer {
                 $new_file_dir = dirname($new_file_path);
 
                 if (!is_dir($new_file_dir)) {
-                    mkdir($new_file_dir, 0755, true);
+                    if (!@mkdir($new_file_dir, 0755, true) && !is_dir($new_file_dir)) {
+                        $this->add_output("Failed to create file storage directory: $new_file_dir", 'error');
+                        $this->add_to_replacement_log($file_record->filename, 'database', false,
+                            'Failed to create storage directory (ID: ' . $file_record->id . ')', $file_record);
+                        return false;
+                    }
                 }
 
-                if (!copy($this->source_image['filepath'], $new_file_path)) {
-                    $this->add_output("Failed to copy new file to storage", 'error');
-                    $this->add_to_replacement_log($file_record->filename, 'database', false, 
-                        'Failed to copy file to storage (ID: ' . $file_record->id . ')', $file_record);
-                    return false;
+                // Avoid overwriting an existing hash path (filepool content is immutable).
+                if (!file_exists($new_file_path)) {
+                    if (!copy($this->source_image['filepath'], $new_file_path)) {
+                        $this->add_output("Failed to copy new file to storage", 'error');
+                        $this->add_to_replacement_log($file_record->filename, 'database', false, 
+                            'Failed to copy file to storage (ID: ' . $file_record->id . ')', $file_record);
+                        return false;
+                    }
                 }
 
                 // Update database record.

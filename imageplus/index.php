@@ -88,9 +88,10 @@ $back_btn = optional_param('backbtn', '', PARAM_RAW);
 $next_btn = optional_param('nextbtn', '', PARAM_RAW);
 $execute_btn = optional_param('executebtn', '', PARAM_RAW);
 
-// Handle "Start Over" by clearing session.
-$start_over = optional_param('startover', '', PARAM_RAW);
+// Handle "Start Over" by clearing wizard state (CSRF-protected).
+$start_over = optional_param('startover', 0, PARAM_INT);
 if ($start_over) {
+    require_sesskey();
     $cache->delete('wizard');
     redirect($PAGE->url);
 }
@@ -106,6 +107,8 @@ if (!$wizard_data) {
     $wizard_data->preservepermissions = $default_preserve_permissions;
     $wizard_data->executionmode = $default_mode;
     $wizard_data->allowimageconversion = 1;
+    $wizard_data->keeporiginaldimensions = 1;
+    $wizard_data->autopurgecache = 1;
     $wizard_data->filesystemfiles = [];
     $wizard_data->databasefiles = [];
     $wizard_data->selectedfilesystem = [];
@@ -146,7 +149,7 @@ if ($step == 2 && $next_btn) {
         // Ensure the file is within the Moodle dirroot and exists.
         $full_path = realpath($clean_path);
         if ($full_path && strpos($full_path, $CFG->dirroot) === 0 && file_exists($full_path)) {
-            $validated_filesystem[] = $clean_path;
+            $validated_filesystem[] = $clean_path;  // Use the original path (validated) to avoid symlink resolution issues.
         }
     }
     
@@ -246,12 +249,21 @@ if ($from_form = $mform->get_data()) {
         // Save final options (already sanitized by form).
         $wizard_data->preservepermissions = $from_form->preservepermissions;
         $wizard_data->executionmode = $from_form->executionmode;
+        $wizard_data->autopurgecache = isset($from_form->autopurgecache) ? $from_form->autopurgecache : 1;
+        
         if (isset($from_form->allowimageconversion)) {
             $wizard_data->allowimageconversion = $from_form->allowimageconversion;
         } else {
             // If checkbox not in form (e.g., GD not available), set to 0
             $wizard_data->allowimageconversion = 0;
         }
+
+        if (isset($from_form->keeporiginaldimensions)) {
+            $wizard_data->keeporiginaldimensions = $from_form->keeporiginaldimensions;
+        } else {
+            $wizard_data->keeporiginaldimensions = 1;
+        }
+
         $cache->set('wizard', $wizard_data);
         
         // Handle file upload from filepicker.
@@ -388,6 +400,7 @@ if ($from_form = $mform->get_data()) {
             'search_filesystem' => (bool)$wizard_data->searchfilesystem,
             'file_type' => $wizard_data->filetype,
             'allow_image_conversion' => (bool)$wizard_data->allowimageconversion,
+            'keep_original_dimensions' => (bool)$wizard_data->keeporiginaldimensions,
         ];
         
         $replacer = new \local_imageplus\replacer($config);
@@ -425,6 +438,15 @@ if ($from_form = $mform->get_data()) {
         
         // Clean up temp file.
         @unlink($temp_file);
+
+        // Purge Moodle caches if any files were replaced.
+        $cache_purged = false;
+        if (($replacer->get_stats()['files_replaced'] > 0 || $replacer->get_stats()['db_files_replaced'] > 0)) {
+            if ($wizard_data->autopurgecache) {
+                purge_all_caches();
+                $cache_purged = true;
+            }
+        }
         
         // Display results.
         echo $OUTPUT->header();
@@ -432,7 +454,9 @@ if ($from_form = $mform->get_data()) {
         echo $renderer->render_results($replacer, 
             $wizard_data->filesystemfiles,
             $wizard_data->databasefiles, 
-            false);
+            false,
+            $cache_purged,
+            $wizard_data->autopurgecache);
         
         // Clear cache (Start Over button is rendered by the renderer).
         $cache->delete('wizard');

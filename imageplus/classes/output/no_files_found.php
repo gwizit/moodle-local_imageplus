@@ -60,7 +60,10 @@ class no_files_found implements renderable, templatable {
         $data = new stdClass();
 
         $data->message = get_string('nofilesfound_desc', 'local_imageplus', s($this->search_term));
-        $data->startover_url = new \moodle_url('/local/imageplus/index.php', ['startover' => 1]);
+        $data->startover_url = (new \moodle_url('/local/imageplus/index.php', [
+            'startover' => 1,
+            'sesskey' => sesskey(),
+        ]))->out(false);
         $data->startover_label = get_string('startover', 'local_imageplus');
 
         return $data;

@@ -5,7 +5,7 @@
 **Type:** Local Plugin (local_imageplus)  
 **Developer:** G Wiz IT Solutions  
 **Website:** https://gwizit.com  
-**Version:** 3.0.5  
+**Version:** 3.0.7  
 **License:** GNU GPL v3 or later
 
 ---
@@ -79,6 +79,7 @@ For detailed installation instructions, see [imageplus/README.md](imageplus/READ
 
 - **Source Code:** https://github.com/gwizit/moodle-local_imageplus
 - **Bug Tracker:** https://github.com/gwizit/moodle-local_imageplus/issues
+- **Support / Issues:** https://github.com/gwizit/moodle-local_imageplus/issues
 - **Developer Website:** https://gwizit.com
 - **Moodle Plugins Directory:** *(pending submission)*
 
@@ -176,7 +177,7 @@ This plugin is licensed under the [GNU GPL v3 or later](LICENSE).
 
 **Found this plugin useful?** Consider supporting its development!
 
-- **Donate:** https://square.link/u/9SpmIaIW
+- **Donate:** https://square.link/u/DMRTvZ0Y
 - **Report issues:** https://github.com/gwizit/moodle-local_imageplus/issues
 - **Professional support:** Contact via https://gwizit.com
 

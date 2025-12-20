@@ -137,7 +137,8 @@ If you get database errors:
    ```
 
 4. **Contact Support:**
-   https://gwizit.com
+   - https://gwizit.com
+   - https://github.com/gwizit/moodle-local_imageplus/issues
 
 ---
 

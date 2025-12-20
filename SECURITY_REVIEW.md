@@ -3,9 +3,11 @@
 
 **Date:** October 24, 2025  
 **Plugin:** local_imageplus (ImagePlus)  
-**Version:** 3.0.5  
+**Version:** 3.0.6  
 **Reviewer:** GitHub Copilot  
 **Reference:** https://moodledev.io/general/development/policies/security
+
+**Update (Dec 19, 2025):** This document was refreshed for v3.0.6 after minor hardening changes (CSRF protection for the “Start over” action, reverse-tabnabbing mitigation, and defense-in-depth file handling checks).
 
 ---
 

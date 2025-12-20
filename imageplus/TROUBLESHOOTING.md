@@ -1,11 +1,11 @@
 # ImagePlus - Troubleshooting Guide
 
-## Version 3.0.5
+## Version 3.0.7
 
 This guide covers common issues and solutions for the ImagePlus plugin.
 
 **Compatibility:** Moodle 4.3 to 5.1+  
-**Last Updated:** October 24, 2025
+**Last Updated:** December 19, 2025
 
 ---
 
@@ -90,7 +90,7 @@ php admin/cli/purge_caches.php
 **On Linux/Mac:**
 ```bash
 cd /path/to/moodle/local/
-unzip moodle-local_imageplus-v3.0.5.zip
+unzip moodle-local_imageplus-v3.0.6.zip
 cd ..
 sudo chown -R www-data:www-data local/imageplus
 sudo chmod -R 755 local/imageplus
@@ -262,12 +262,19 @@ php admin/cli/upgrade.php
 1. **Preview Mode Selected**
    - Solution: Change "Execution mode" to "Execute changes" in Step 3
 
-2. **Permission Errors**
+2. **Browser Caching (Most Common)**
+   - The file IS replaced, but your browser is showing the old cached version.
+   - Solution: Clear browser cache or open in Incognito window.
+
+3. **Moodle Caching**
+   - Solution: Enable "Automatically purge Moodle caches" in Step 3.
+
+4. **Permission Errors**
    - Check PHP error logs
    - Verify web server has write permissions
    - On Linux: `sudo chown -R www-data:www-data [moodle-dirroot]`
 
-3. **Memory Limit Exceeded**
+5. **Memory Limit Exceeded**
    - Increase PHP memory limit in php.ini
    - Process fewer files at once
 
@@ -336,10 +343,11 @@ php admin/cli/upgrade.php
 **Cause:** Source image smaller than targets or compression issues.
 
 **Solutions:**
-1. Use source image larger than or equal to target images
-2. Use high-quality source images
-3. For JPEGs, use quality 90+ source images
-4. Consider using PNG for graphics to avoid JPEG compression
+1. **Disable Resizing:** Uncheck "Resize to match target dimensions" in Step 3 to use your high-quality source image as-is.
+2. Use source image larger than or equal to target images
+3. Use high-quality source images
+4. For JPEGs, use quality 90+ source images
+5. Consider using PNG for graphics to avoid JPEG compression
 
 ### Transparency Lost
 
@@ -489,7 +497,7 @@ Look for "GD Support: enabled"
 
 When reporting issues, include:
 - Moodle version
-- Plugin version (v3.0.5)
+- Plugin version (v3.0.6)
 - PHP version
 - Exact error message
 - Steps to reproduce
@@ -522,6 +530,6 @@ When reporting issues, include:
 
 ---
 
-*Troubleshooting Guide - ImagePlus v3.0.5*  
+*Troubleshooting Guide - ImagePlus v3.0.6*  
 *By G Wiz IT Solutions - https://gwizit.com*
 

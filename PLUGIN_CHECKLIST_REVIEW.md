@@ -3,7 +3,7 @@
 
 **Date:** October 24, 2025  
 **Plugin:** local_imageplus (ImagePlus)  
-**Version:** 3.0.5  
+**Version:** 3.0.6  
 **Developer:** G Wiz IT Solutions
 
 ---
@@ -380,7 +380,7 @@ The checklist identifies these as **approval blockers**. Let's verify:
 **Option B: Manual ZIP Creation**
 1. ZIP the `imageplus` folder
 2. Ensure the ZIP contains `imageplus/` as root folder
-3. Name it: `moodle-local_imageplus-v3.0.5.zip`
+3. Name it: `moodle-local_imageplus-v3.0.6.zip`
 
 ### Step 2: Submit to Moodle.org
 

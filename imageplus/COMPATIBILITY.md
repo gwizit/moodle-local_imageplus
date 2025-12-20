@@ -1,13 +1,13 @@
 # ImagePlus - Moodle Version Compatibility
 
 **Plugin:** local_imageplus  
-**Version:** 3.0.5  
+**Version:** 3.0.6  
 
-## Version 3.0.5 Compatibility Statement
+## Version 3.0.6 Compatibility Statement
 
 **Fully Compatible:** Moodle 4.3 through 5.1+
 
-**Last Updated:** October 24, 2025
+**Last Updated:** December 19, 2025
 
 ---
 
@@ -348,7 +348,7 @@
 
 ---
 
-*Compatibility Guide - ImagePlus v3.0.5*  
+*Compatibility Guide - ImagePlus v3.0.6*  
 *By G Wiz IT Solutions - https://gwizit.com*
 
-*Last Updated: Version 3.0.5 - October 24, 2025*
+*Last Updated: Version 3.0.6 - December 19, 2025*

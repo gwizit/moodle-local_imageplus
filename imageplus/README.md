@@ -4,13 +4,37 @@ A powerful Moodle plugin that allows site administrators to search and replace f
 
 **Developed by:** [G Wiz IT Solutions](https://gwizit.com)  
 **Plugin Type:** Local  
-**Version:** v3.0.5  
+**Version:** v3.0.7  
 **Compatibility:** Moodle 4.3 to 5.1+  
 **License:** GNU GPL v3 or later
 
 **Source Code:** [https://github.com/gwizit/moodle-local_imageplus](https://github.com/gwizit/moodle-local_imageplus)  
 **Bug Tracker:** [https://github.com/gwizit/moodle-local_imageplus/issues](https://github.com/gwizit/moodle-local_imageplus/issues)  
+**Support / Issues:** [https://github.com/gwizit/moodle-local_imageplus/issues](https://github.com/gwizit/moodle-local_imageplus/issues)  
 **Documentation:** [README.md](https://github.com/gwizit/moodle-local_imageplus/blob/main/imageplus/README.md)
+
+---
+
+## What's New in Version 3.0.7
+
+This update introduces critical caching improvements and new user options:
+
+- **Automatic Cache Purging**: New option to automatically purge Moodle caches after file replacement (enabled by default).
+- **Image Resizing Control**: New option to choose whether to resize the replacement image to match the target dimensions or keep its original size.
+- **Browser Cache Warnings**: Prominent warnings advising users to clear browser caches when filesystem files are replaced.
+- **File Replacement Fix**: Improved handling of file paths on Linux systems to ensure reliable replacements.
+- **UI Improvements**: Enhanced completion messages and direct links to Moodle's cache purge page.
+
+---
+
+## What's New in Version 3.0.6
+
+This update includes security hardening and support-link improvements:
+
+- CSRF hardening for “Start over” action (requires `sesskey`)
+- Reverse-tabnabbing mitigation (`rel="noopener noreferrer"` on `target="_blank"` links)
+- Added GitHub Issues support link in the UI and documentation
+- Donation link updated
 
 ---
 
@@ -417,6 +441,11 @@ The plugin defines two capabilities and requires site administrator access:
 
 ### Version 3.0.5 (2025-10-24)
 - Complete architectural modernization
+### Version 3.0.6 (2025-12-19)
+- Security hardening: CSRF-protected “Start over” and reverse-tabnabbing mitigation
+- Support: UI and docs now link to GitHub Issues
+- Maintenance: donation link updated; additional file handling defense-in-depth checks
+
 - Implemented Mustache templating system
 - Added Output API with renderable/templatable classes
 - Created ES6 JavaScript modules with AMD compilation

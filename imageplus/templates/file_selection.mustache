@@ -71,7 +71,7 @@
             <div class="local-imageplus-file-item">
                 <input type="checkbox" name="filesystem_files[]" value="{{filepath}}" class="local-imageplus-fs-checkbox" id="{{checkbox_id}}">
                 <label for="{{checkbox_id}}" style="flex: 1; margin: 0; cursor: pointer;">
-                    <a href="{{url}}" class="local-imageplus-file-link" target="_blank" title="{{view_file_label}}">{{basename}}</a>
+                    <a href="{{url}}" class="local-imageplus-file-link" target="_blank" rel="noopener noreferrer" title="{{view_file_label}}">{{basename}}</a>
                     <div class="local-imageplus-file-details">{{filepath}}</div>
                 </label>
             </div>
@@ -90,7 +90,7 @@
                 <input type="checkbox" name="database_files[]" value="{{file_id}}" class="local-imageplus-db-checkbox" id="{{checkbox_id}}">
                 <label for="{{checkbox_id}}" style="flex: 1; margin: 0; cursor: pointer;">
                     {{#url}}
-                    <a href="{{url}}" class="local-imageplus-file-link" target="_blank" title="{{view_file_label}}">{{filename}}</a>
+                    <a href="{{url}}" class="local-imageplus-file-link" target="_blank" rel="noopener noreferrer" title="{{view_file_label}}">{{filename}}</a>
                     {{/url}}
                     {{^url}}
                     <span class="local-imageplus-file-link">{{filename}}</span>

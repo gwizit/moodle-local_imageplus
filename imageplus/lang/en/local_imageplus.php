@@ -47,6 +47,11 @@ $string['filetype_video'] = 'Videos (MP4, AVI, MOV, WebM)';
 $string['filetype_audio'] = 'Audio (MP3, WAV, OGG, M4A)';
 $string['allowimageconversion'] = 'Allow cross-format image replacement';
 $string['allowimageconversion_help'] = 'When enabled, allows replacing images with different formats (e.g., JPG can replace PNG). The source image will be automatically converted to match the target format. When disabled, only exact format matches will be replaced (JPG to JPG only).';
+$string['keeporiginaldimensions'] = 'Resize to match target dimensions';
+$string['keeporiginaldimensions_help'] = 'If enabled, the replacement image will be resized to match the width and height of the image being replaced. If disabled, the replacement image will keep its own dimensions.';
+$string['autopurgecache'] = 'Automatically purge Moodle caches';
+$string['autopurgecache_help'] = 'Strongly recommended. If enabled, Moodle caches will be purged immediately after replacement to ensure changes are visible.';
+$string['cache_purge_warning'] = 'Moodle caches were not purged. It is strongly recommended that you <a href="{$a}" target="_blank" rel="noopener noreferrer">purge caches manually</a> to see the changes.';
 $string['sourceimage'] = 'Replacement image';
 $string['sourceimage_help'] = 'Upload the image that will replace all matching images. The image will be automatically resized and converted to match each target image format.';
 $string['sourcefile'] = 'Replacement file';
@@ -97,6 +102,7 @@ $string['filetype_audio_name'] = 'AUDIO (MP3, WAV, OGG, or M4A)';
 
 // Results page.
 $string['resultstitle'] = 'Results';
+$string['browser_cache_warning'] = 'You have replaced files on the server filesystem. You MUST clear your browser cache to see the changes. If you still see the old image, try opening the image in a new private/incognito window.';
 $string['filesystemresults'] = 'File System Results';
 $string['databaseresults'] = 'Database Results';
 $string['processingoutput'] = 'Processing Output';
@@ -112,7 +118,8 @@ $string['nofilesreplaced_desc'] = 'No files were successfully replaced. Check th
 $string['operationcomplete'] = 'Operation completed!';
 $string['operationcomplete_preview'] = 'This was a preview - no files were actually modified.';
 $string['operationcomplete_execute'] = 'Files have been updated.';
-$string['operationcomplete_clearcache'] = 'You may want to <a href="{$a}" target="_blank">clear Moodle caches</a>.';
+$string['operationcomplete_purged'] = 'Files have been updated and Moodle caches have been purged.';
+$string['operationcomplete_clearcache'] = 'You may want to <a href="{$a}" target="_blank" rel="noopener noreferrer">clear Moodle caches</a>.';
 $string['preview_mode_warning'] = '<strong>PREVIEW MODE:</strong> No files have been replaced. This was a preview run to show what would be changed. To actually replace files, select "Execute changes" mode in Step 3.';
 $string['filesreplaced_fs'] = 'Files Replaced (File System)';
 $string['filesreplaced_db'] = 'Files Replaced (Database)';
@@ -185,5 +192,5 @@ $string['privacy:metadata:local_imageplus_log:timemodified'] = 'When the operati
 $string['eventimagereplaced'] = 'Images replaced';
 
 // Credits.
-$string['credits'] = 'Developed by <a href="https://gwizit.com" target="_blank">G Wiz IT Solutions</a> | <a href="https://square.link/u/9SpmIaIW" target="_blank">💝 Support This Project</a>';
-$string['donation_message'] = '💝 <strong>Found this plugin useful?</strong> Please consider <a href="https://square.link/u/9SpmIaIW" target="_blank">making a donation</a> to help us maintain and improve this plugin. Your support keeps this project alive!';
+$string['credits'] = 'Developed by <a href="https://gwizit.com" target="_blank" rel="noopener noreferrer">G Wiz IT Solutions</a> | <a href="https://square.link/u/DMRTvZ0Y" target="_blank" rel="noopener noreferrer">💝 Support This Project</a> | <a href="https://github.com/gwizit/moodle-local_imageplus/issues" target="_blank" rel="noopener noreferrer">Support / Issues</a>';
+$string['donation_message'] = '💝 <strong>Found this plugin useful?</strong> Please consider <a href="https://square.link/u/DMRTvZ0Y" target="_blank" rel="noopener noreferrer">making a donation</a> to help us maintain and improve this plugin. Your support keeps this project alive!';
