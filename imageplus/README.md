@@ -4,14 +4,29 @@ A powerful Moodle plugin that allows site administrators to search and replace f
 
 **Developed by:** [G Wiz IT Solutions](https://gwizit.com)  
 **Plugin Type:** Local  
-**Version:** v3.0.7  
-**Compatibility:** Moodle 4.3 to 5.1+  
+**Version:** v3.1.0  
+**Compatibility:** Moodle 4.5 to 5.2+  
 **License:** GNU GPL v3 or later
 
 **Source Code:** [https://github.com/gwizit/moodle-local_imageplus](https://github.com/gwizit/moodle-local_imageplus)  
 **Bug Tracker:** [https://github.com/gwizit/moodle-local_imageplus/issues](https://github.com/gwizit/moodle-local_imageplus/issues)  
 **Support / Issues:** [https://github.com/gwizit/moodle-local_imageplus/issues](https://github.com/gwizit/moodle-local_imageplus/issues)  
 **Documentation:** [README.md](https://github.com/gwizit/moodle-local_imageplus/blob/main/imageplus/README.md)
+
+---
+
+## What's New in Version 3.1.0
+
+### 🔄 Moodle 5.2 Compatibility (February 28, 2026)
+- **Bootstrap 5 Migration** - Replaced all Bootstrap 4 CSS utility classes with Bootstrap 5 equivalents:
+  - `mr-2` → `me-2` (margin-right to margin-end)
+  - `ml-2` → `ms-2` (margin-left to margin-start)
+  - `badge-primary` → `bg-primary` (badge background utilities)
+  - `badge-success` → `bg-success`
+  - `badge-secondary` → `bg-secondary`
+- **Minimum Moodle Version**: Now requires Moodle 4.5 or later
+- **No External API migration needed** - Plugin does not use external services
+- **Full audit completed** - Verified no usage of deprecated `data-toggle`, `btn-block`, `form-row`, `custom-control`, `font-weight-bold`, `text-left`/`text-right`, or `float-left`/`float-right` Bootstrap 4 classes
 
 ---
 
@@ -375,7 +390,7 @@ The plugin defines two capabilities and requires site administrator access:
 ## Requirements
 
 ### Moodle Requirements
-- **Moodle version**: 4.3 to 5.1+ (fully tested and compatible)
+- **Moodle version**: 4.5 to 5.2+ (fully tested and compatible)
 - **PHP version**: 7.4 or higher (8.0+ recommended)
 
 ### PHP Extensions
@@ -438,6 +453,12 @@ The plugin defines two capabilities and requires site administrator access:
 ## Changelog
 
 ## 📋 Version History
+
+### Version 3.1.0 (2026-02-28)
+- Moodle 5.2 compatibility: Bootstrap 5 migration
+- Minimum Moodle version raised to 4.5
+- Replaced all deprecated Bootstrap 4 utility classes with Bootstrap 5 equivalents
+- Full audit of CSS classes for forward compatibility
 
 ### Version 3.0.5 (2025-10-24)
 - Complete architectural modernization

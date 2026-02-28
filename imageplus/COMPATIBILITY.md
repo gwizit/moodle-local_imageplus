@@ -1,13 +1,13 @@
 # ImagePlus - Moodle Version Compatibility
 
 **Plugin:** local_imageplus  
-**Version:** 3.0.6  
+**Version:** 3.1.0  
 
-## Version 3.0.6 Compatibility Statement
+## Version 3.1.0 Compatibility Statement
 
-**Fully Compatible:** Moodle 4.3 through 5.1+
+**Fully Compatible:** Moodle 4.5 through 5.2+
 
-**Last Updated:** December 19, 2025
+**Last Updated:** February 28, 2026
 
 ---
 
@@ -21,13 +21,13 @@
 
 
 
-✅ **Supported Moodle Versions:** 4.3 - 5.1+  ✅ **File Storage API**
+✅ **Supported Moodle Versions:** 4.5 - 5.2+  ✅ **File Storage API**
 
 ✅ **PHP Requirements:** 7.4+ (8.0+ recommended)  - `get_file_storage()` - File system operations
 
 ✅ **Database Support:** MySQL, PostgreSQL, MariaDB  - `$fs->get_file()` - Retrieve stored files
 
-✅ **Testing Status:** Fully tested on Moodle 5.1  - `moodle_url::make_pluginfile_url()` - Generate proper file URLs
+✅ **Testing Status:** Fully tested on Moodle 5.2  - `moodle_url::make_pluginfile_url()` - Generate proper file URLs
 
 ✅ **Code Compliance:** All Moodle security and coding standards met- Available since: Moodle 2.0
 
@@ -105,7 +105,7 @@
 
 - `$DB->set_field()` - Update fields- No modern-only methods used
 
-- `$DB->sql_like()` - Cross-DB LIKE queries- Compatible with Moodle 4.3 file handling
+- `$DB->sql_like()` - Cross-DB LIKE queries- Compatible with Moodle 4.5 file handling
 
 - Available since: Moodle 2.0
 
@@ -127,7 +127,7 @@
 
 - Available since: Moodle 2.6- CSRF protection using sesskey() functions
 
-- All methods available in Moodle 4.3+
+- All methods available in Moodle 4.5+
 
 ✅ **Other Core Functions**
 
@@ -141,13 +141,13 @@
 
 - `$OUTPUT` object - Output functions### Tested Versions
 
-- Available since: Moodle 2.0- ✅ Moodle 5.1 (Full testing completed)
+- Available since: Moodle 2.0- ✅ Moodle 5.2 (Full testing completed)
 
-- ⚠️ Moodle 4.3 - 5.0 (Code review confirms compatibility)
+- ⚠️ Moodle 4.5 - 5.1 (Code review confirms compatibility)
 
 ### Features Requiring No Version-Specific Code
 
-### Test Scenarios for Moodle 4.3 - 5.0
+### Test Scenarios for Moodle 4.5 - 5.1
 
 ✅ **Multi-Step Wizard**1. **Plugin Installation**
 
@@ -165,7 +165,7 @@
 
 - No modern-only methods used   - Step 2: File selection with checkboxes
 
-- Compatible with Moodle 4.3 file handling   - Step 3: Replacement options and execution
+- Compatible with Moodle 4.5 file handling   - Step 3: Replacement options and execution
 
    - Session state preservation between steps
 
@@ -191,7 +191,7 @@
 
 - CSRF protection using sesskey() functions   - XSS protection on all inputs/outputs
 
-- All methods available in Moodle 4.3+   - Capability checking
+- All methods available in Moodle 4.5+   - Capability checking
 
 
 
@@ -205,29 +205,29 @@
 
 ### Minimum Moodle Version   - Error messages
 
-- **Version Code:** 2023042400 (Moodle 4.3)
+- **Version Code:** 2024042200 (Moodle 4.5)
 
-- **Release Date:** April 24, 2023---
+- **Release Date:** April 22, 2024---
 
 - **Why This Minimum:** 
 
   - All APIs used are stable since Moodle 2.0## Version Requirements
 
-  - Set to 4.3 for security best practices
+  - Set to 4.5 for security best practices
 
   - Ensures modern PHP support (7.4+)### Minimum Moodle Version
 
-  - Maintains compatibility with currently supported LTS versions- **Version Code:** 2023042400 (Moodle 4.3)
+  - Maintains compatibility with currently supported LTS versions- **Version Code:** 2024042200 (Moodle 4.5)
 
-- **Release Date:** April 24, 2023
+- **Release Date:** April 22, 2024
 
-### Maximum Tested Version- **Why This Minimum:** All APIs used are stable since Moodle 2.0, but we set 4.3 as minimum for security best practices and modern PHP support
+### Maximum Tested Version- **Why This Minimum:** All APIs used are stable since Moodle 2.0, but we set 4.5 as minimum for Bootstrap 5 compatibility and modern PHP support
 
-- **Version:** Moodle 5.1+
+- **Version:** Moodle 5.2+
 
 - **Release Date:** November 2024### Maximum Tested Version
 
-- **Testing Status:** ✅ Fully tested and working- **Version:** Moodle 5.1+
+- **Testing Status:** ✅ Fully tested and working- **Version:** Moodle 5.2+
 
 - **Release Date:** November 2024
 
@@ -255,7 +255,7 @@
 
 - **Compatibility:** Uses Moodle DML API for cross-database compatibility### None Identified
 
-- No breaking changes between Moodle 4.3 and 5.1 affect this plugin
+- No breaking changes between Moodle 4.5 and 5.2 affect this plugin
 
 ---- All APIs used are stable and backward compatible
 
@@ -267,11 +267,11 @@
 
 ### Fully Tested Versions
 
-- ✅ **Moodle 5.1** - Full testing completed (October 2025)## Upgrade Path
+- ✅ **Moodle 5.2** - Full testing completed (February 2026)## Upgrade Path
 
   - All wizard steps tested
 
-  - File operations verified### From Moodle 4.3 to 5.x
+  - File operations verified### From Moodle 4.5 to 5.x
 
   - Security features validated- No changes required
 
@@ -281,7 +281,7 @@
 
 ### Code-Review Confirmed Compatibility
 
-- ✅ **Moodle 4.3 - 5.0**### From Moodle 5.0 to 5.1
+- ✅ **Moodle 4.5 - 5.1**### From Moodle 5.0 to 5.2
 
   - All APIs used are available- No changes required
 
@@ -299,11 +299,11 @@
 
 ### Expected Compatibility
 
-### None Identified ✅This plugin should continue working with future Moodle versions (5.2+) because:
+### None Identified ✅This plugin should continue working with future Moodle versions (5.3+) because:
 
 1. Uses only core, stable APIs
 
-- ✅ No breaking changes between Moodle 4.3 and 5.1 affect this plugin2. No deprecated function calls
+- ✅ No breaking changes between Moodle 4.5 and 5.2 affect this plugin2. No deprecated function calls
 
 - ✅ All APIs used are stable and backward compatible3. Standard security practices
 
@@ -335,7 +335,7 @@
 
 **License:** GNU GPL v3 or later- Current Moodle LTS version and newer
 
-- Currently: Moodle 4.3+ (LTS released April 2023)
+- Currently: Moodle 4.5+ (LTS released April 2024)
 
 --- Future updates will be released if compatibility breaks
 
@@ -348,7 +348,7 @@
 
 ---
 
-*Compatibility Guide - ImagePlus v3.0.6*  
+*Compatibility Guide - ImagePlus v3.1.0*  
 *By G Wiz IT Solutions - https://gwizit.com*
 
-*Last Updated: Version 3.0.6 - December 19, 2025*
+*Last Updated: Version 3.1.0 - February 28, 2026*

@@ -305,7 +305,7 @@ class replacer_form extends \moodleform {
         $start_over_link = \html_writer::link(
             new \moodle_url('/local/imageplus/index.php', ['startover' => 1]),
             get_string('startover', 'local_imageplus'),
-            ['class' => 'btn btn-secondary ml-2']
+            ['class' => 'btn btn-secondary ms-2']
         );
         $mform->addElement('html', \html_writer::div($start_over_link, 'mt-2'));
     }
@@ -325,11 +325,11 @@ class replacer_form extends \moodleform {
         foreach ($steps as $num => $name) {
             $class = 'list-inline-item badge ';
             if ($num == $current_step) {
-                $class .= 'badge-primary';
+                $class .= 'bg-primary';
             } else if ($num < $current_step) {
-                $class .= 'badge-success';
+                $class .= 'bg-success';
             } else {
-                $class .= 'badge-secondary';
+                $class .= 'bg-secondary';
             }
             $html .= '<li class="' . $class . '">' . $num . '. ' . s($name) . '</li>';
         }
